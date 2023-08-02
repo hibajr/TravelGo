@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Home from "./scenes/Hero";
+import Navbar from "./components/Navbar";
+import Popular from "./scenes/Popular";
+import SpecialOffers from "./scenes/SpecialOffers";
+import Hiking from "./scenes/Hiking";
+import Blog from "./scenes/Blog";
+import Footer from "./scenes/Footer";
 
-function App() {
+const App = () => {
+  const [isTopOfPage, setIsTopOfPage] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setIsTopOfPage(true);
+      }
+      if (window.scrollY !== 0) {
+        setIsTopOfPage(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  console.log(isTopOfPage);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="overflow-x-hidden">
+      <Navbar isTopOfPage={isTopOfPage} />
+      <Home />
+      <Popular />
+      <SpecialOffers />
+      <Hiking />
+      <Blog />
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
